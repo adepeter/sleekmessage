@@ -1,0 +1,18 @@
+This is just a notepad that i use to write solutions on how to tackle my problems
+
+
+I want start a new chat with spambot but i want to check if there is a Chat bewteen me & spambot or spambot and me
+
+message = Message.objects.filter(Q(recipient=recipient, starter=request.user) | Q(starter=recipient, recipient)) # return all messages where recipient == spambot
+if message.exists():
+    message = message.get()
+    form = ReplyForm()
+    exist = True
+else:
+    form = ChatForm()
+    exist = False
+if request.method == 'POST':
+    form = form
+    if form.is_valid():
+        if exist:
+            # code solved

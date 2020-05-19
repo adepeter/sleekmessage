@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ chat.starter.username }} and {{ chat.recipient.username }} dialog{% endblock %}
+
+{% block content %}
+    <div class="mainblok">
+        <div class="phdr">Correspondence between {{ chat.starter.username }} and {{ chat.recipient.username }}</div>
+        <div class="gmenu">
+            <ul>
+                <li>Starter: {{ chat.starter.username }}</li>
+                <li>Recipient: {{ chat.recipient.username }}</li>
+                <li>Message: {{ chat.text }}</li>
+                <li>Time sent: {{ chat.time_sent }}</li>
+                <li>Is replied: {{ chat.is_replied }}</li>
+                <li>Is read: {{ chat.is_read }}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="mainblok">
+        <div class="phdr">Replies</div>
+    </div>
+
+    <div class="mainblok">
+        {% for reply in replies %}
+            <div class="{% if reply.user == request.user %}list1{% else %}list2{% endif %}">
+                <ul>
+                    <li>Message: {{ reply.text }}</li>
+                    <li>Replier: {{ reply.user }}</li>
+                    <li>Time sent: {{ reply.time_replied }}</li>
+                </ul>
+            </div>
+        {% empty %}
+            <p class="rmenu">This conversation has not been replied yet</p>
+        {% endfor %}
+    </div>
+{% endblock %}

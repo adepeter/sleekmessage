@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Message {{ user.username }}{% endblock %}
+
+{% block content %}
+    <div class="mainblok">
+        <div class="phdr">Chat with {{ recipient }}</div>
+        <div class="gmenu">
+            <form method="POST" action="">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Start Chat" {% if is_same_recipient %}disabled{% endif %}/>
+            </form>
+        </div>
+    </div>
+{% endblock %}

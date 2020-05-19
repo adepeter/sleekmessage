@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load message_tags %}
+
+{% block title %}Correspondences{% endblock %}
+
+{% block content %}
+    <div class="phdr">
+        Youre logged in as {{ request.user }}
+    </div>
+    <div class="mainblok">
+        <div class="phdr">
+            Newestg messages
+        </div>
+        {% for newest_chat in newest_chats %}
+            <div class="{% cycle 'rmenu' 'list1' 'gmenu' 'list2' %}">
+
+                <a href="{{ newest_chat.get_absolute_url }}">
+                    {% if newest_chat.status == 0 %}
+                        {% typeofinstance newest_chat as msg %}New reply from
+                        {{ msg.user }}{% else %}{{ newest_chat.starter.username }} just started a new correspondence
+                        with you {% endif %}
+                </a>
+            </div>
+        {% empty %}
+            <p class="rmenu">
+                You dont have any inbox yet
+            </p>
+        {% endfor %}
+        <div class="phdr">
+            Total: {{ newest_chats.count }}
+        </div>
+    </div>
+    <div class="mainblok">
+        <div class="phdr">
+            Active Correspondence
+        </div>
+        {% for chat in chats %}
+            <div class="{% cycle 'list1' 'list2' %}">
+                {% if chat.starter == request.user %}
+                    <a href="{% url 'read_chat' chat.id %}">{{ chat }}</a>
+                {% else %}
+                    <a href="{{ chat.get_absolute_url }}">{{ chat }}</a>
+                {% endif %}
+            </div>
+        {% empty %}
+            <div class="rmenu">
+                You have no active correspondence yet
+            </div>
+        {% endfor %}
+        <div class="phdr">
+            Total: {{ chats.count }}
+        </div>
+    </div>
+{% endblock %}
