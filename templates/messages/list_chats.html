@@ -16,12 +16,15 @@
 
                 <a href="{{ newest_chat.get_absolute_url }}">
                     {% if newest_chat.status == 0 %}
-                        {% typeofinstance newest_chat as msg %}New reply from
-                        {{ msg.user }}{% else %}{{ newest_chat.starter.username }} just started a new correspondence
-                        with you {% endif %}
+                        {% typeofinstance newest_chat as msg %}
+                        New reply from {{ msg.user }}
+                    {% else %}
+                        {{ newest_chat.starter.username }} just started a new correspondence
+                        with you
+                    {% endif %}
                 </a>
             </div>
-        {% empty %}
+            {% empty %}
             <p class="rmenu">
                 You dont have any inbox yet
             </p>
@@ -42,7 +45,7 @@
                     <a href="{{ chat.get_absolute_url }}">{{ chat }}</a>
                 {% endif %}
             </div>
-        {% empty %}
+            {% empty %}
             <div class="rmenu">
                 You have no active correspondence yet
             </div>
